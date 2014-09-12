@@ -52,8 +52,7 @@ class Form extends \Http\Controller {
 
     private function createForm(\tax_agreement\Resource\Form $agreement)
     {
-        $form = new \Form;
-        $form->addTextField('organization_name', $agreement->getOrganizationName());
+        $form = $agreement->pullForm();
         return $form;
     }
 
