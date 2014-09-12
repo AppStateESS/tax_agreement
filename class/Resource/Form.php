@@ -67,7 +67,7 @@ class Form extends \Resource {
  public function __construct()
     {
         parent::__construct();
-        $this->access_date = new \Variable\Date(null, 'access_date');
+        $this->access_date = new \Variable\Date(time(), 'access_date');
         $this->approved_date = new \Variable\Date(null, 'approved_date');
         $this->approved_date->allowNull(true);
         $this->organization_name = new \Variable\TextOnly(null, 'organization_name');
@@ -78,12 +78,42 @@ class Form extends \Resource {
         $this->event_location = new \Variable\TextOnly(null, 'event_location');
         $this->filepath = new \Variable\File(null, 'filepath');
         $this->filepath->allowNull(true);
-
     }
 
     public function getOrganizationName()
     {
         return $this->organization_name->get();
+    }
+
+    public function setOrganizationName($name)
+    {
+        $this->organization_name->set($name);
+    }
+
+    public function setOrganizationRepName($name)
+    {
+        $this->organization_rep_name->set($name);
+    }
+
+    public function setOrganizationRepTitle($title)
+    {
+        $this->organization_rep_title->set($title);
+    }
+
+    public function setEventName($name)
+    {
+        $this->event_name->set($name);
+    }
+
+    public function setEventDate($date)
+    {
+        $date_integer = strtotime($date);
+        $this->event_date->set($date_integer);
+    }
+
+    public function setEventLocation($location)
+    {
+        $this->event_location->set($location);
     }
 
 

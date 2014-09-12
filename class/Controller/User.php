@@ -9,6 +9,8 @@ namespace tax_agreement\Controller;
  */
 class User extends \Http\Controller {
 
+    private $form;
+
     public function getController(\Request $request)
     {
         $cmd = $request->shiftCommand();
@@ -17,9 +19,9 @@ class User extends \Http\Controller {
             $cmd = 'form';
         }
 
+        $form = new User\Form($this->getModule());
         switch ($cmd) {
             case 'form':
-                $form = new User\Form($this->getModule());
                 return $form;
         }
     }

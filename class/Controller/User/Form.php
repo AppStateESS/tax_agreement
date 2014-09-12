@@ -17,18 +17,46 @@ class Form extends \Http\Controller {
         return $response;
     }
 
+    public function post(\Request $request)
+    {
+        $command = $request->shiftCommand();
+
+        switch ($command) {
+            case 'save':
+                $this->savePost($request);
+                $response = new \Http\SeeOtherResponse(\Server::getSiteUrl() . 'tax_agreement/user/form/list');
+                break;
+        }
+
+        return $response;
+    }
+
+    private function savePost($request)
+    {
+        $form = new \tax_agreement\Resource\Form;
+        \tax_agreement\Factory\FormFactory::postForm($form, $request);
+        \ResourceFactory::saveResource($form);
+    }
+
     public function getHtmlView($data, \Request $request)
     {
         $cmd = $request->shiftCommand();
 
         if (empty($cmd)) {
-            $cmd = 'new';
+            $cmd = 'form';
         }
 
         switch ($cmd) {
-            case 'new':
+            case 'form':
                 $template = $this->newForm($request);
                 break;
+
+            case 'list':
+                exit('list here');
+                break;
+
+            default:
+                \Error::errorPage(404);
         }
 
         if (!empty(\Session::getInstance()->tax_message)) {
@@ -39,11 +67,19 @@ class Form extends \Http\Controller {
         return $template;
     }
 
+    private function setMessage($message)
+    {
+        $ses = \Session::getInstance();
+        $ses->tax_message = $message;
+    }
+
     private function newForm(\Request $request)
     {
         $agreement = new \tax_agreement\Resource\Form;
         $form = $this->createForm($agreement);
+        $form->setAction('tax_agreement/user/form/save');
         $form->appendCSS('bootstrap');
+        $form->addSubmit('save', 'Save form');
         $template_data = $form->getInputStringArray();
         $template = new \Template($template_data);
         $template->setModuleTemplate('tax_agreement', 'User/Form/form.html');
