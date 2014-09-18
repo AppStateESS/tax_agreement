@@ -1,1 +1,18 @@
-<p>List will go here</p>
+<table class="table table-striped">
+    <tr>
+        <th>Event name</th>
+        <th>Event date</th>
+        <th>Organization</th>
+        <th>Org. Representative</th>
+        <th>Approval date</th>
+    </tr>
+<?php foreach ($rows as $i): extract($i);?>
+<tr>
+    <td><?=$event_name?></td>
+    <td><?=$event_date?></td>
+    <td><?=$organization_name?></td>
+    <td><?=$organization_rep_name,': ',$organization_rep_title?></td>
+    <td><?=$approved_date?></td>
+</tr>
+<?php endforeach; ?>
+</table>

@@ -102,7 +102,28 @@ class Form extends \Http\Controller {
 
     private function listing(\Request $request)
     {
-        $template = new \Template(array());
+        $db = \Database::newDB();
+        $t = $db->addTable('tax_mainclass');
+        $t->addFieldConditional('user_id', \Current_User::getId());
+        $result = $db->select();
+        $rows = array();
+        if ($result) {
+            foreach ($result as $i) {
+                $i['event_date'] = strftime('%c', $i['event_date']);
+                $i['access_date'] = strftime('%c', $i['access_date']);
+                if (empty($i['approved_date'])) {
+                    $i['approved_date'] = 'Not approved';
+                } else {
+
+                    $i['approved_date'] = strftime('%c', $i['access_date']);
+                }
+                $rows[] = $i;
+            }
+        }
+
+        $tpl['rows'] = $rows;
+
+        $template = new \Template($tpl);
         $template->setModuleTemplate('tax_agreement', 'User/Form/list.html');
         return $template;
     }
