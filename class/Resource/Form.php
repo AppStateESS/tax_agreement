@@ -61,6 +61,8 @@ class Form extends \Resource {
      */
     protected $filepath;
 
+    protected $user_id;
+
     protected $table = 'tax_mainclass';
 
 
@@ -116,6 +118,10 @@ class Form extends \Resource {
         $this->event_location->set($location);
     }
 
+    public function setUserId($id)
+    {
+        $this->user_id = (int) $id;
+    }
 
 }
 

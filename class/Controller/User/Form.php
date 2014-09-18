@@ -35,6 +35,7 @@ class Form extends \Http\Controller {
     {
         $form = new \tax_agreement\Resource\Form;
         \tax_agreement\Factory\FormFactory::postForm($form, $request);
+        $form->setUserId(\Current_User::getId());
         \ResourceFactory::saveResource($form);
     }
 
@@ -52,7 +53,7 @@ class Form extends \Http\Controller {
                 break;
 
             case 'list':
-                exit('list here');
+                $template = $this->listing($request);
                 break;
 
             default:
@@ -76,7 +77,14 @@ class Form extends \Http\Controller {
     private function newForm(\Request $request)
     {
         $agreement = new \tax_agreement\Resource\Form;
+        $form = new \Form;
         $form = $this->createForm($agreement);
+        $form->getInput('organization_name')[0]->setRequired();
+        $form->getInput('event_name')[0]->setRequired();
+        $form->getInput('event_location')[0]->setRequired();
+        $form->getInput('event_date')[0]->setRequired();
+        $form->getInput('organization_rep_name')[0]->setRequired();
+        $form->getInput('organization_rep_title')[0]->setRequired();
         $form->setAction('tax_agreement/user/form/save');
         $form->appendCSS('bootstrap');
         $form->addSubmit('save', 'Save form');
