@@ -80,8 +80,12 @@ class Form extends \Http\Controller {
             throw new \Exception('Bad id passed to function');
         }
         $form = \tax_agreement\Factory\FormFactory::loadFormById($id);
+        $vars = $form->getStringVars();
+        $vars['access_date'] = strftime('%B %e, %Y', strtotime($vars['access_date']));
+        $vars['event_date'] = strftime('%B %e, %Y', strtotime($vars['event_date']));
         $template = new \Template($vars);
         $template->setModuleTemplate('tax_agreement', 'agreement.html');
+        return $template;
     }
 
     private function setMessage($message)
