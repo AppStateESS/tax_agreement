@@ -13,17 +13,8 @@ class User extends \Http\Controller {
 
     public function getController(\Request $request)
     {
-        $cmd = $request->shiftCommand();
-
-        if (empty($cmd)) {
-            $cmd = 'form';
-        }
-
         $form = new User\Form($this->getModule());
-        switch ($cmd) {
-            case 'form':
-                return $form;
-        }
+        return $form;
     }
 
 }

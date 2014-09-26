@@ -56,6 +56,10 @@ class Form extends \Http\Controller {
                 $template = $this->listing($request);
                 break;
 
+            case 'print':
+                $template = $this->printAgreement($request);
+                break;
+
             default:
                 \Error::errorPage(404);
         }
@@ -66,6 +70,18 @@ class Form extends \Http\Controller {
             unset($ses->tax_message);
         }
         return $template;
+    }
+
+    private function printAgreement(\Request $request)
+    {
+        $id = $request->shiftCommand();
+
+        if (!is_numeric($id)) {
+            throw new \Exception('Bad id passed to function');
+        }
+        $form = \tax_agreement\Factory\FormFactory::loadFormById($id);
+        $template = new \Template($vars);
+        $template->setModuleTemplate('tax_agreement', 'agreement.html');
     }
 
     private function setMessage($message)

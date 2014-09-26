@@ -1,5 +1,6 @@
 <table class="table table-striped">
     <tr>
+        <th>&nbsp;</th>
         <th>Event name</th>
         <th>Event date</th>
         <th>Organization</th>
@@ -8,6 +9,7 @@
     </tr>
 <?php foreach ($rows as $i): extract($i);?>
 <tr>
+    <td><a class="btn btn-default" href="./tax_agreement/user/print/<?=$id?>"><i class="fa fa-print"></i> Print</a></td>
     <td><?=$event_name?></td>
     <td><?=$event_date?></td>
     <td><?=$organization_name?></td>

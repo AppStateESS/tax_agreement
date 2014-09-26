@@ -21,6 +21,14 @@ class FormFactory {
         $form->setOrganizationRepTitle($vars['organization_rep_title']);
     }
 
+    public static function loadFormById($id)
+    {
+        $id = (int)$id;
+        $form = new \tax_agreement\Resource\Form;
+        \ResourceFactory::loadByID($form, $id);
+        return $form;
+    }
+
 }
 
 ?>
