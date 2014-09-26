@@ -37,6 +37,7 @@ class Form extends \Http\Controller {
         \tax_agreement\Factory\FormFactory::postForm($form, $request);
         $form->setUserId(\Current_User::getId());
         \ResourceFactory::saveResource($form);
+        $this->setMessage('Tax agreement form saved');
     }
 
     public function getHtmlView($data, \Request $request)
@@ -66,7 +67,15 @@ class Form extends \Http\Controller {
 
         if (!empty(\Session::getInstance()->tax_message)) {
             $ses = \Session::getInstance();
-            $template->add('message', $ses->tax_message);
+            $tax_message = $ses->tax_message;
+            $message = <<<EOF
+<div class="alert alert-warning alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            $tax_message
+</div>
+EOF;
+
+            $template->add('message', $message);
             unset($ses->tax_message);
         }
         return $template;
@@ -108,7 +117,7 @@ class Form extends \Http\Controller {
         $i4->setMin($today);
         current($form->getInput('organization_rep_name'))->setRequired();
         current($form->getInput('organization_rep_title'))->setRequired();
-        $form->setAction('tax_agreement/user/form/save');
+        $form->setAction('tax_agreement/user/save');
         $form->appendCSS('bootstrap');
         $form->addSubmit('save', 'Save form');
         $template_data = $form->getInputStringArray();
