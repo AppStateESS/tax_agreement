@@ -76,15 +76,18 @@ class Form extends \Http\Controller {
 
     private function newForm(\Request $request)
     {
+        $today = strftime('%Y-%m-%d', time());
         $agreement = new \tax_agreement\Resource\Form;
-        $form = new \Form;
         $form = $this->createForm($agreement);
-        $form->getInput('organization_name')[0]->setRequired();
-        $form->getInput('event_name')[0]->setRequired();
-        $form->getInput('event_location')[0]->setRequired();
-        $form->getInput('event_date')[0]->setRequired();
-        $form->getInput('organization_rep_name')[0]->setRequired();
-        $form->getInput('organization_rep_title')[0]->setRequired();
+        current($form->getInput('organization_name'))->setRequired();
+        current($form->getInput('event_name'))->setRequired();
+        current($form->getInput('event_location'))->setRequired();
+        $i4 = current($form->getInput('event_date'));
+        $i4->setValue($today);
+        $i4->setRequired();
+        $i4->setMin($today);
+        current($form->getInput('organization_rep_name'))->setRequired();
+        current($form->getInput('organization_rep_title'))->setRequired();
         $form->setAction('tax_agreement/user/form/save');
         $form->appendCSS('bootstrap');
         $form->addSubmit('save', 'Save form');
