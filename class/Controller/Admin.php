@@ -19,13 +19,15 @@ class Admin extends \Http\Controller {
 
     public function getHtmlView($data, \Request $request)
     {
-        $cmd = $request->shiftCommand();
-
         if (!\Current_User::isLogged()) {
             \Current_User::requireLogin();
         }
 
+        $cmd = $request->shiftCommand();
+
+
         $template = new \Template;
+        $template->setModuleTemplate('tax_agreement', 'Admin/Listing.html');
         return $template;
     }
 
