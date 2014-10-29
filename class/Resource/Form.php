@@ -80,11 +80,22 @@ class Form extends \Resource {
         $this->event_location = new \Variable\TextOnly(null, 'event_location');
         $this->filepath = new \Variable\File(null, 'filepath');
         $this->filepath->allowNull(true);
+        $this->user_id = new \Variable\Integer(0, 'user_id');
     }
 
     public function getOrganizationName()
     {
         return $this->organization_name->get();
+    }
+
+    public function getFilePath()
+    {
+        return $this->filepath->get();
+    }
+
+    public function setFilePath($path)
+    {
+        $this->filepath->set($path);
     }
 
     public function setOrganizationName($name)
@@ -116,6 +127,11 @@ class Form extends \Resource {
     public function setEventLocation($location)
     {
         $this->event_location->set($location);
+    }
+
+    public function getUserId()
+    {
+        return $this->user_id->get();
     }
 
     public function setUserId($id)

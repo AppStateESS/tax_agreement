@@ -58,7 +58,7 @@ class Form extends \Http\Controller {
                 break;
 
             case 'print':
-                $template = $this->printAgreement($request);
+                $this->printAgreement($request);
                 break;
 
             default:
@@ -88,13 +88,21 @@ EOF;
         if (!is_numeric($id)) {
             throw new \Exception('Bad id passed to function');
         }
-        $form = \tax_agreement\Factory\FormFactory::loadFormById($id);
-        $vars = $form->getStringVars();
-        $vars['access_date'] = strftime('%B %e, %Y', strtotime($vars['access_date']));
-        $vars['event_date'] = strftime('%B %e, %Y', strtotime($vars['event_date']));
-        $template = new \Template($vars);
-        $template->setModuleTemplate('tax_agreement', 'agreement.html');
-        return $template;
+        $form = \tax_agreement\Factory\FormFactory::loadFormById($id,
+                        \Current_User::getId());
+        if (!\tax_agreement\Factory\FormFactory::allowFormAccess($form)) {
+            \Current_User::disallow('Form access not allowed');
+        }
+        $file = \tax_agreement\Factory\FormFactory::getFormPathForPrinting($form);
+        $fullpath = PHPWS_HOME_DIR . 'files/tax_agreement/' . $file;
+
+        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+        header('Content-Type: application/octetstream');
+        header("Content-Transfer-Encoding: Binary");
+        header("Content-length: " . filesize($fullpath));
+        //header("Content-disposition: attachment; filename=\"" . basename($fullpath) . "\"");
+        header('Content-disposition: attachment; filename="tax-agreement-form.pdf"');
+        readfile($fullpath);
     }
 
     private function setMessage($message)
@@ -121,6 +129,9 @@ EOF;
         $form->appendCSS('bootstrap');
         $form->addSubmit('save', 'Save form');
         $template_data = $form->getInputStringArray();
+        $agreements = $this->currentUserAgreementCount();
+        $template_data['agreements'] = $agreements ? "($agreements)" : null;
+
         $template = new \Template($template_data);
         $template->setModuleTemplate('tax_agreement', 'User/Form/form.html');
         return $template;
@@ -130,6 +141,22 @@ EOF;
     {
         $form = $agreement->pullForm();
         return $form;
+    }
+
+    private function currentUserAgreementCount()
+    {
+        $user_id = \Current_User::getId();
+        if (empty($user_id)) {
+            throw new \Exception('Current user has a zero id');
+        }
+        $db = \Database::newDB();
+        $table = $db->addTable('tax_mainclass');
+        $table->addFieldConditional('user_id', $user_id);
+        $table->addFieldConditional('approved_date', null, 'is');
+        $id = $table->addField('id');
+        $id->showCount();
+        $count = $db->selectColumn();
+        return $count;
     }
 
     private function listing(\Request $request)

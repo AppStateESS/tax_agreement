@@ -1,7 +1,7 @@
 <?php
 if (isset($message)){echo $message;}?>
 <h1>Tax Agreement Information</h1>
-<p>Please enter the following information or <a href="./tax_agreement/user/list">view your current agreements.</a></p>
+<p>Please enter the following information or <a href="./tax_agreement/user/list">view your current unapproved agreements<?=$agreements?>.</a></p>
 <?=$form_start?>
 <?=$organization_name_group?>
 <?=$event_name_group?>
