@@ -169,7 +169,7 @@ EOF;
         if ($result) {
             foreach ($result as $i) {
                 $i['event_date'] = strftime('%c', $i['event_date']);
-                $i['access_date'] = strftime('%c', $i['access_date']);
+                //$i['access_date'] = strftime('%c', $i['access_date']);
                 if (empty($i['approved_date'])) {
                     $i['approved_date'] = 'Not approved';
                 } else {
