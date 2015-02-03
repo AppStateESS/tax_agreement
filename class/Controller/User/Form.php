@@ -2,17 +2,23 @@
 
 namespace tax_agreement\Controller\User;
 
+require_once PHPWS_SOURCE_DIR . 'mod/tax_agreement/conf/defines.php';
+
 /**
  *
  * @author Matthew McNaney <mcnaney at gmail dot com>
  * @license http://opensource.org/licenses/lgpl-3.0.html
  */
-class Form extends \Http\Controller {
+class Form extends \Http\Controller
+{
 
     public function get(\Request $request)
     {
         $data = array();
         $view = $this->getView($data, $request);
+        if (is_a($view, '\Http\NotAcceptableResponse')) {
+            return $view;
+        }
         $response = new \Response($view);
         return $response;
     }
@@ -58,7 +64,9 @@ class Form extends \Http\Controller {
                 break;
 
             case 'print':
-                $this->printAgreement($request);
+                // if printAgreement fails, an error message is returned via the returned template
+                // otherwise, the download headers are sent and the script exits.
+                $template = $this->printAgreement($request);
                 break;
 
             default:
@@ -84,25 +92,37 @@ EOF;
     private function printAgreement(\Request $request)
     {
         $id = $request->shiftCommand();
-
         if (!is_numeric($id)) {
             throw new \Exception('Bad id passed to function');
         }
-        $form = \tax_agreement\Factory\FormFactory::loadFormById($id,
-                        \Current_User::getId());
+        $form = \tax_agreement\Factory\FormFactory::loadFormById($id, \Current_User::getId());
         if (!\tax_agreement\Factory\FormFactory::allowFormAccess($form)) {
             \Current_User::disallow('Form access not allowed');
         }
-        $file = \tax_agreement\Factory\FormFactory::getFormPathForPrinting($form);
+        try {
+            $file = \tax_agreement\Factory\FormFactory::getFormPathForPrinting($form);
+        } catch (\Exception $e) {
+            if ($e->getCode() == 666) {
+                if (\Current_User::allow('tax_agreement')) {
+                    $message = '<p>WKPDF can not be accessed on this server.</p>';
+                } else {
+                    $message = '<p>Printing can not be accessed at this time. Please check back later.</p>';
+                }
+                $view = new \View\HtmlView($message);
+                return $view;
+            } else {
+                throw $e;
+            }
+        }
         $fullpath = PHPWS_HOME_DIR . 'files/tax_agreement/' . $file;
 
         header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
         header('Content-Type: application/octetstream');
         header("Content-Transfer-Encoding: Binary");
         header("Content-length: " . filesize($fullpath));
-        //header("Content-disposition: attachment; filename=\"" . basename($fullpath) . "\"");
         header('Content-disposition: attachment; filename="tax-agreement-form.pdf"');
         readfile($fullpath);
+        exit();
     }
 
     private function setMessage($message)
@@ -168,13 +188,11 @@ EOF;
         $rows = array();
         if ($result) {
             foreach ($result as $i) {
-                $i['event_date'] = strftime('%c', $i['event_date']);
-                //$i['access_date'] = strftime('%c', $i['access_date']);
+                $i['event_date'] = strftime('%e %b, %Y', $i['event_date']);
                 if (empty($i['approved_date'])) {
                     $i['approved_date'] = 'Not approved';
                 } else {
-
-                    $i['approved_date'] = strftime('%c', $i['access_date']);
+                    $i['approved_date'] = strftime('%e %b, %Y', $i['access_date']);
                 }
                 $rows[] = $i;
             }

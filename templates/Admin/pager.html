@@ -1,0 +1,48 @@
+<style>
+    .help {
+        cursor : help;
+    }
+</style>
+<div style="padding : 1em 0">
+    <ul class="nav nav-tabs" style="margin-bottom:1em">
+        <li role="presentation" class="<?=!$approved?'active':'';?>">
+            <a href="./tax_agreement/admin/unapproved">Unapproved</a>
+        </li>
+        <li role="presentation" class="<?=$approved?'active':'';?>">
+            <a href="./tax_agreement/admin/approved">Approved</a>
+        </li>
+    </ul>
+
+    <div class="pager-listing" id="agreement-list" data-rpp="20">
+        <div style="text-align:right" class="pager-search"></div>
+        <form action="./tax_agreement/admin" method="post">
+            <input type="hidden" name="action" value="<?=$command?>" />
+            <table class="table table-striped">
+                <thead class="pager-head">
+                    <tr>
+                        <th style="width:1%"><input type="checkbox" name="checkall" id="check-all-box" value="1" /></th>
+                        <th>&nbsp;</th>
+                        <th class="pager-header username"></th>
+                        <th class="pager-header event_date"></th>
+                        <th class="pager-header event_name"></th>
+                        <th class="pager-header organization_name"></th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody class="pager-body">
+                    <tr class="pager-row" data-row-id="">
+                        <td class="pager-column xcheckbox"></td>
+                        <td class="pager-column options"></td>
+                        <td class="pager-column username"></td>
+                        <td class="pager-column event_date"></td>
+                        <td class="pager-column event_name"></td>
+                        <td class="pager-column organization_name"></td>
+                        <td class="pager-column delete"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <?=$approval_button?>
+        </form>
+        <div class="text-center"><div id="page-list" class="pagination pagination-centered"></div></div>
+    </div>
+</div>
