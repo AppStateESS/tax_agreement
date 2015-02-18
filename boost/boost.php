@@ -8,7 +8,7 @@
  * @license http://opensource.org/licenses/lgpl-3.0.html
  */
 $proper_name = 'Tax Agreement Form';
-$version = '1.0.1';
+$version = '1.0.2';
 $import_sql = false;
 
 // We are creating a file directory to store our student PDFs

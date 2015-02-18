@@ -37,18 +37,21 @@ class Admin extends \Http\Controller
                 exit();
 
             case 'approve_all':
-                \tax_agreement\Factory\FormFactory::approveList($request->getVar('agreement'));
+                if ($request->isVar('agreement')) {
+                    \tax_agreement\Factory\FormFactory::approveList($request->getVar('agreement'));
+                }
                 return new \Http\FoundResponse('./tax_agreement/admin/unapproved');
                 break;
 
             case 'unapprove_all':
-                \tax_agreement\Factory\FormFactory::unapproveList($request->getVar('agreement'));
+                if ($request->isVar('agreement')) {
+                    \tax_agreement\Factory\FormFactory::unapproveList($request->getVar('agreement'));
+                }
                 return new \Http\FoundResponse('./tax_agreement/admin/approved');
                 break;
         }
     }
 
-    
     protected function getJsonView($data, \Request $request)
     {
         $db = \Database::newDB();
@@ -91,7 +94,6 @@ class Admin extends \Http\Controller
             \Current_User::disallow();
         }
         $cmd = $request->shiftCommand();
-        $template = new \Template;
         if (empty($cmd)) {
             $cmd = 'unapproved';
         }
@@ -128,7 +130,9 @@ class Admin extends \Http\Controller
         $template->add('command', $approved ? 'unapprove_all' : 'approve_all');
         $template->add('approval_button', $approval_button);
         $template->setModuleTemplate('tax_agreement', 'Admin/pager.html');
-        return $template;
+        $content = \PHPWS_ControlPanel::display($template->get());
+        $view = new \View\HtmlView($content);
+        return $view;
     }
 
     public function getController(\Request $request)

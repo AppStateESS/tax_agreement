@@ -20,6 +20,12 @@ function tax_agreement_update(&$content, $currentVersion)
 ------------
 + Added user id to registration table.
 </pre>';
+       case version_compare($currentVersion, '1.0.2', '<'):
+           $content[] = '<pre>1.0.2
+------------
++ Fixed clicking Unapprove or Approve checked button when nothing was selected.
++ Output inside Control Panel.
+</pre>';
     }
     return true;
 }
