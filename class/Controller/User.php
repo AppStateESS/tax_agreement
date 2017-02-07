@@ -11,7 +11,7 @@ class User extends \Http\Controller {
 
     private $form;
 
-    public function getController(\Request $request)
+    public function getController(\Canopy\Request $request)
     {
         $form = new User\Form($this->getModule());
         return $form;

@@ -10,7 +10,7 @@ namespace tax_agreement\Controller;
 class Admin extends \Http\Controller
 {
 
-    public function get(\Request $request)
+    public function get(\Canopy\Request $request)
     {
         $data = array();
         $view = $this->getView($data, $request);
@@ -18,7 +18,7 @@ class Admin extends \Http\Controller
         return $response;
     }
 
-    public function post(\Request $request)
+    public function post(\Canopy\Request $request)
     {
         $action = filter_input(INPUT_POST, 'action');
         $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
@@ -52,7 +52,7 @@ class Admin extends \Http\Controller
         }
     }
 
-    protected function getJsonView($data, \Request $request)
+    protected function getJsonView($data, \Canopy\Request $request)
     {
         $db = \Database::newDB();
         $t1 = $db->addTable('tax_mainclass');
@@ -88,7 +88,7 @@ class Admin extends \Http\Controller
         return parent::getJsonView($data, $request);
     }
 
-    public function getHtmlView($data, \Request $request)
+    public function getHtmlView($data, \Canopy\Request $request)
     {
         if (!\Current_User::allow('tax_agreement')) {
             \Current_User::disallow();
@@ -135,7 +135,7 @@ class Admin extends \Http\Controller
         return $view;
     }
 
-    public function getController(\Request $request)
+    public function getController(\Canopy\Request $request)
     {
         return $this;
     }

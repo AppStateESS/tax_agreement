@@ -10,7 +10,7 @@ namespace tax_agreement;
 class Module extends \Module
 {
 
-    public function getController(\Request $request)
+    public function getController(\Canopy\Request $request)
     {
         if (!\Current_User::isLogged()) {
             \Current_User::requireLogin();

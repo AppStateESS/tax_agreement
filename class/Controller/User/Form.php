@@ -12,7 +12,7 @@ require_once PHPWS_SOURCE_DIR . 'mod/tax_agreement/conf/defines.php';
 class Form extends \Http\Controller
 {
 
-    public function get(\Request $request)
+    public function get(\Canopy\Request $request)
     {
         $data = array();
         $view = $this->getView($data, $request);
@@ -23,7 +23,7 @@ class Form extends \Http\Controller
         return $response;
     }
 
-    public function post(\Request $request)
+    public function post(\Canopy\Request $request)
     {
         $command = $request->shiftCommand();
 
@@ -46,7 +46,7 @@ class Form extends \Http\Controller
         $this->setMessage('Tax agreement form saved');
     }
 
-    public function getHtmlView($data, \Request $request)
+    public function getHtmlView($data, \Canopy\Request $request)
     {
         $cmd = $request->shiftCommand();
 
@@ -89,7 +89,7 @@ EOF;
         return $template;
     }
 
-    private function printAgreement(\Request $request)
+    private function printAgreement(\Canopy\Request $request)
     {
         $id = $request->shiftCommand();
         if (!is_numeric($id)) {
@@ -131,7 +131,7 @@ EOF;
         $ses->tax_message = $message;
     }
 
-    private function newForm(\Request $request)
+    private function newForm(\Canopy\Request $request)
     {
         $today = strftime('%Y-%m-%d', time());
         $agreement = new \tax_agreement\Resource\Form;
@@ -179,7 +179,7 @@ EOF;
         return $count;
     }
 
-    private function listing(\Request $request)
+    private function listing(\Canopy\Request $request)
     {
         $db = \Database::newDB();
         $t = $db->addTable('tax_mainclass');

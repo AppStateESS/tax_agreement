@@ -12,7 +12,7 @@ require_once PHPWS_SOURCE_DIR . 'mod/tax_agreement/conf/defines.php';
 class FormFactory
 {
 
-    public static function postForm(\tax_agreement\Resource\Form $form, \Request $request)
+    public static function postForm(\tax_agreement\Resource\Form $form, \Canopy\Request $request)
     {
         $vars = $request->getRequestVars();
         $form->setId($vars['id']);
