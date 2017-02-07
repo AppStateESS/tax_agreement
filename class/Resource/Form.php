@@ -8,13 +8,13 @@ namespace tax_agreement\Resource;
 class Form extends \Resource {
     /**
      * Date the student accessed site
-     * @var \Variable\Date
+     * @var \Variable\DateVar
      */
     protected $access_date;
 
     /**
      * Date admin approved tax form
-     * @var \Variable\Date
+     * @var \Variable\DateVar
      */
     protected $approved_date;
 
@@ -45,7 +45,7 @@ class Form extends \Resource {
 
     /**
      * Date event is occurring
-     * @var \Variable\Date
+     * @var \Variable\DateVar
      */
     protected $event_date;
 
@@ -69,14 +69,14 @@ class Form extends \Resource {
  public function __construct()
     {
         parent::__construct();
-        $this->access_date = new \Variable\Date(time(), 'access_date');
-        $this->approved_date = new \Variable\Date(null, 'approved_date');
+        $this->access_date = new \Variable\DateVar(time(), 'access_date');
+        $this->approved_date = new \Variable\DateVar(null, 'approved_date');
         $this->approved_date->allowNull(true);
         $this->organization_name = new \Variable\TextOnly(null, 'organization_name');
         $this->organization_rep_name = new \Variable\TextOnly(null, 'organization_rep_name');
         $this->organization_rep_title = new \Variable\TextOnly(null, 'organization_rep_title');
         $this->event_name = new \Variable\TextOnly(null, 'event_name');
-        $this->event_date = new \Variable\Date(null, 'event_date');
+        $this->event_date = new \Variable\DateVar(null, 'event_date');
         $this->event_location = new \Variable\TextOnly(null, 'event_location');
         $this->filepath = new \Variable\File(null, 'filepath');
         $this->filepath->allowNull(true);
