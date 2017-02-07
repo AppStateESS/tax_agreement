@@ -80,7 +80,7 @@ class Form extends \Resource {
         $this->event_location = new \Variable\TextOnly(null, 'event_location');
         $this->filepath = new \Variable\File(null, 'filepath');
         $this->filepath->allowNull(true);
-        $this->user_id = new \Variable\Integer(0, 'user_id');
+        $this->user_id = new \Variable\IntegerVar(0, 'user_id');
     }
 
     public function getOrganizationName()
