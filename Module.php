@@ -7,7 +7,7 @@ namespace tax_agreement;
  * @author Matthew McNaney <mcnaney at gmail dot com>
  * @license http://opensource.org/licenses/lgpl-3.0.html
  */
-class Module extends \Module
+class Module extends \Canopy\Module
 {
 
     public function getController(\Canopy\Request $request)

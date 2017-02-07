@@ -19,7 +19,7 @@ class Form extends \Http\Controller
         if (is_a($view, '\Http\NotAcceptableResponse')) {
             return $view;
         }
-        $response = new \Response($view);
+        $response = new \Canopy\Response($view);
         return $response;
     }
 
