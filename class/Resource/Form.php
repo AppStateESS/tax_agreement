@@ -57,7 +57,7 @@ class Form extends \Resource {
 
     /**
      * Location of PDF file
-     * @var \Variable\File
+     * @var \Variable\FileVar
      */
     protected $filepath;
 
@@ -78,7 +78,7 @@ class Form extends \Resource {
         $this->event_name = new \Variable\TextOnly(null, 'event_name');
         $this->event_date = new \Variable\DateVar(null, 'event_date');
         $this->event_location = new \Variable\TextOnly(null, 'event_location');
-        $this->filepath = new \Variable\File(null, 'filepath');
+        $this->filepath = new \Variable\FileVar(null, 'filepath');
         $this->filepath->allowNull(true);
         $this->user_id = new \Variable\IntegerVar(0, 'user_id');
     }
