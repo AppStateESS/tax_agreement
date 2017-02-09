@@ -134,7 +134,7 @@ EOF;
 
     public static function approve($id)
     {
-        $db = \Database::newDB();
+        $db = \phpws2\Database::newDB();
         $t = $db->addTable('tax_mainclass');
         $t->addFieldConditional('id', $id);
         $t->addValue('approved_date', time());
@@ -144,7 +144,7 @@ EOF;
 
     public static function unapprove($id)
     {
-        $db = \Database::newDB();
+        $db = \phpws2\Database::newDB();
         $t = $db->addTable('tax_mainclass');
         $t->addFieldConditional('id', $id);
         $t->addValue('approved_date', null);
@@ -154,7 +154,7 @@ EOF;
 
     public static function delete($id)
     {
-        $db = \Database::newDB();
+        $db = \phpws2\Database::newDB();
         $t = $db->addTable('tax_mainclass');
         $t->addFieldConditional('id', $id);
         $db->setLimit(1);
@@ -173,7 +173,7 @@ EOF;
         if (empty($checked)) {
             return;
         }
-        $db = \Database::newDB();
+        $db = \phpws2\Database::newDB();
         $t = $db->addTable('tax_mainclass');
         $t->addFieldConditional('id', $checked, 'in');
         $t->addValue('approved_date', time());
@@ -186,7 +186,7 @@ EOF;
         if (empty($checked)) {
             return;
         }
-        $db = \Database::newDB();
+        $db = \phpws2\Database::newDB();
         $t = $db->addTable('tax_mainclass');
         $t->addFieldConditional('id', $checked, 'in');
         $t->addValue('approved_date', null);

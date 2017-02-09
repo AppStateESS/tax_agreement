@@ -54,7 +54,7 @@ class Admin extends \Http\Controller
 
     protected function getJsonView($data, \Canopy\Request $request)
     {
-        $db = \Database::newDB();
+        $db = \phpws2\Database::newDB();
         $t1 = $db->addTable('tax_mainclass');
         $t2 = $db->addTable('users');
         $db->joinResources($t1, $t2, $db->createConditional($t1->getField('user_id'), $t2->getField('id'), '='));
@@ -69,7 +69,7 @@ class Admin extends \Http\Controller
             $t1->addFieldConditional('approved_date', null, 'is');
         }
 
-        $pager = new \DatabasePager($db);
+        $pager = new \phpws2\DatabasePager($db);
         $pager->setId('agreement-list');
         $pager->setHeaders(array('event_name' => 'Event name', 'event_date' => 'Event date', 'organization_name' => 'Organization', 'username' => 'Submitter'));
 

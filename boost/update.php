@@ -12,9 +12,9 @@ function tax_agreement_update(&$content, $currentVersion)
 
     switch ($currentVersion) {
        case version_compare($currentVersion, '1.0.1', '<'):
-           $db = \Database::newDB();
+           $db = \phpws2\Database::newDB();
            $t = $db->addTable('tax_mainclass');
-           $dt = \Database\Datatype::factory($t, 'user_id', 'integer', '0');
+           $dt = \phpws2\Database\Datatype::factory($t, 'user_id', 'integer', '0');
            $dt->add();
            $content[] = '<pre>1.0.1
 ------------

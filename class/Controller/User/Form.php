@@ -169,7 +169,7 @@ EOF;
         if (empty($user_id)) {
             throw new \Exception('Current user has a zero id');
         }
-        $db = \Database::newDB();
+        $db = \phpws2\Database::newDB();
         $table = $db->addTable('tax_mainclass');
         $table->addFieldConditional('user_id', $user_id);
         $table->addFieldConditional('approved_date', null, 'is');
@@ -181,7 +181,7 @@ EOF;
 
     private function listing(\Canopy\Request $request)
     {
-        $db = \Database::newDB();
+        $db = \phpws2\Database::newDB();
         $t = $db->addTable('tax_mainclass');
         $t->addFieldConditional('user_id', \Current_User::getId());
         $result = $db->select();
