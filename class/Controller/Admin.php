@@ -117,7 +117,7 @@ class Admin extends \Http\Controller
         $js_file = PHPWS_SOURCE_HTTP . 'mod/tax_agreement/javascript/script.js';
         $script = "<script type='text/javascript' src='$js_file'></script>";
         \Layout::addJSHeader($script, 'tax');
-        \Pager::prepare();
+        \phpws2\Pager::prepare();
 
         if ($approved) {
             $approval_button = "<button class='btn btn-danger'><i class='fa fa-remove'></i> Unapprove checked</button>";
