@@ -125,7 +125,7 @@ class Admin extends \Http\Controller
             $approval_button = "<button class='btn btn-success'><i class='fa fa-check'></i> Approve checked</button>";
         }
 
-        $template = new \Template;
+        $template = new \phpws2\Template;
         $template->add('approved', $approved);
         $template->add('command', $approved ? 'unapprove_all' : 'approve_all');
         $template->add('approval_button', $approval_button);

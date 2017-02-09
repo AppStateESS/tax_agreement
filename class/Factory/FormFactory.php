@@ -28,7 +28,7 @@ class FormFactory
     {
         $id = (int) $id;
         $form = new \tax_agreement\Resource\Form;
-        \ResourceFactory::loadByID($form, $id);
+        \phpws2\ResourceFactory::loadByID($form, $id);
         return $form;
     }
 
@@ -71,7 +71,7 @@ class FormFactory
         if (empty($filepath)) {
             $filepath = self::createPDF($form);
             $form->setFilePath($filepath);
-            \ResourceFactory::saveResource($form);
+            \phpws2\ResourceFactory::saveResource($form);
         }
 
         return $filepath;
@@ -82,7 +82,7 @@ class FormFactory
         $vars = $form->getStringVars();
         $vars['access_date'] = strftime('%B %e, %Y', strtotime($vars['access_date']));
         $vars['event_date'] = strftime('%B %e, %Y', strtotime($vars['event_date']));
-        $template = new \Template($vars);
+        $template = new \phpws2\Template($vars);
         $template->setModuleTemplate('tax_agreement', 'agreement.html');
         return $template->get();
     }

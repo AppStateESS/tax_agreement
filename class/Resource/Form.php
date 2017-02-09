@@ -5,7 +5,7 @@ namespace tax_agreement\Resource;
  * @author Matthew McNaney <mcnaney at gmail dot com>
  * @license http://opensource.org/licenses/lgpl-3.0.html
  */
-class Form extends \Resource {
+class Form extends \phpws2\Resource {
     /**
      * Date the student accessed site
      * @var \Variable\DateVar

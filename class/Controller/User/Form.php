@@ -42,7 +42,7 @@ class Form extends \Http\Controller
         $form = new \tax_agreement\Resource\Form;
         \tax_agreement\Factory\FormFactory::postForm($form, $request);
         $form->setUserId(\Current_User::getId());
-        \ResourceFactory::saveResource($form);
+        \phpws2\ResourceFactory::saveResource($form);
         $this->setMessage('Tax agreement form saved');
     }
 
@@ -152,7 +152,7 @@ EOF;
         $agreements = $this->currentUserAgreementCount();
         $template_data['agreements'] = $agreements ? "($agreements)" : null;
 
-        $template = new \Template($template_data);
+        $template = new \phpws2\Template($template_data);
         $template->setModuleTemplate('tax_agreement', 'User/Form/form.html');
         return $template;
     }
@@ -200,7 +200,7 @@ EOF;
 
         $tpl['rows'] = $rows;
 
-        $template = new \Template($tpl);
+        $template = new \phpws2\Template($tpl);
         $template->setModuleTemplate('tax_agreement', 'User/Form/list.html');
         return $template;
     }
