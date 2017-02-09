@@ -30,7 +30,7 @@ class Form extends \Http\Controller
         switch ($command) {
             case 'save':
                 $this->savePost($request);
-                $response = new \Http\SeeOtherResponse(\Server::getSiteUrl() . 'tax_agreement/user/form/list');
+                $response = new \Http\SeeOtherResponse(\Canopy\Server::getSiteUrl() . 'tax_agreement/user/form/list');
                 break;
         }
 
