@@ -131,7 +131,7 @@ class Admin extends \Http\Controller
         $template->add('approval_button', $approval_button);
         $template->setModuleTemplate('tax_agreement', 'Admin/pager.html');
         $content = \PHPWS_ControlPanel::display($template->get());
-        $view = new \View\HtmlView($content);
+        $view = new \phpws2\View\HtmlView($content);
         return $view;
     }
 

@@ -73,8 +73,8 @@ class Form extends \Http\Controller
                 \Error::errorPage(404);
         }
 
-        if (!empty(\Session::getInstance()->tax_message)) {
-            $ses = \Session::getInstance();
+        if (!empty(\phpws2\Session::getInstance()->tax_message)) {
+            $ses = \phpws2\Session::getInstance();
             $tax_message = $ses->tax_message;
             $message = <<<EOF
 <div class="alert alert-warning alert-dismissible" role="alert">
@@ -108,7 +108,7 @@ EOF;
                 } else {
                     $message = '<p>Printing can not be accessed at this time. Please check back later.</p>';
                 }
-                $view = new \View\HtmlView($message);
+                $view = new \phpws2\View\HtmlView($message);
                 return $view;
             } else {
                 throw $e;
@@ -127,7 +127,7 @@ EOF;
 
     private function setMessage($message)
     {
-        $ses = \Session::getInstance();
+        $ses = \phpws2\Session::getInstance();
         $ses->tax_message = $message;
     }
 
