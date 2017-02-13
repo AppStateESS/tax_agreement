@@ -7,7 +7,7 @@ namespace tax_agreement\Controller;
  * @author Matthew McNaney <mcnaney at gmail dot com>
  * @license http://opensource.org/licenses/lgpl-3.0.html
  */
-class Admin extends \Http\Controller
+class Admin extends \phpws2\Http\Controller
 {
 
     public function get(\Canopy\Request $request)
@@ -40,14 +40,14 @@ class Admin extends \Http\Controller
                 if ($request->isVar('agreement')) {
                     \tax_agreement\Factory\FormFactory::approveList($request->getVar('agreement'));
                 }
-                return new \Http\FoundResponse('./tax_agreement/admin/unapproved');
+                return new \phpws2\Http\FoundResponse('./tax_agreement/admin/unapproved');
                 break;
 
             case 'unapprove_all':
                 if ($request->isVar('agreement')) {
                     \tax_agreement\Factory\FormFactory::unapproveList($request->getVar('agreement'));
                 }
-                return new \Http\FoundResponse('./tax_agreement/admin/approved');
+                return new \phpws2\Http\FoundResponse('./tax_agreement/admin/approved');
                 break;
         }
     }

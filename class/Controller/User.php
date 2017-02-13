@@ -7,7 +7,7 @@ namespace tax_agreement\Controller;
  * @author Matthew McNaney <mcnaney at gmail dot com>
  * @license http://opensource.org/licenses/lgpl-3.0.html
  */
-class User extends \Http\Controller {
+class User extends \phpws2\Http\Controller {
 
     private $form;
 

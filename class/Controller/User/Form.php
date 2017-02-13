@@ -9,7 +9,7 @@ require_once PHPWS_SOURCE_DIR . 'mod/tax_agreement/conf/defines.php';
  * @author Matthew McNaney <mcnaney at gmail dot com>
  * @license http://opensource.org/licenses/lgpl-3.0.html
  */
-class Form extends \Http\Controller
+class Form extends \phpws2\Http\Controller
 {
 
     public function get(\Canopy\Request $request)
@@ -30,7 +30,7 @@ class Form extends \Http\Controller
         switch ($command) {
             case 'save':
                 $this->savePost($request);
-                $response = new \Http\SeeOtherResponse(\Canopy\Server::getSiteUrl() . 'tax_agreement/user/form/list');
+                $response = new \phpws2\Http\SeeOtherResponse(\Canopy\Server::getSiteUrl() . 'tax_agreement/user/form/list');
                 break;
         }
 
