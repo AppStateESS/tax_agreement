@@ -70,7 +70,7 @@ class Form extends \phpws2\Http\Controller
                 break;
 
             default:
-                \Error::errorPage(404);
+                \phpws2\Error::errorPage(404);
         }
 
         if (!empty(\phpws2\Session::getInstance()->tax_message)) {
